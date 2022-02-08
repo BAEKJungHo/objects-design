@@ -1,5 +1,7 @@
 # JavaBeans, POJO, Entity, VO, DTO
 
+다양한 Object Design 에 대해서 배워보자.
+
 ## POJO(Plain Old Java Object)
 
 - __정의__
@@ -138,6 +140,69 @@ void pojoWithReflection() {
 
 - POJO 는 특정 프레임워크에 종속적이지 않은 Java 객체이다.
 - JavaBean 은 엄격한 규칙 집합을 사용하는 특수한 유형의 POJO 이다. 
+
+## Entity
+
+Entity 는 JPA 에서 사용되는 개념이다. JPA 에서는 `@Entity` 어노테이션을 붙여서 엔티티를 나타낸다.
+
+엔티티의 개념은 실제 테이블과 정확하게 매칭되는 속성들을 갖도록(외래키 대신 참조 객체를 가질 수 있음) 디자인된 클래스이다.
+
+엔티티라는 개념을 도입하게 되면 장점이, 비지니스 로직을 엔티티로 모음으로써, 응집도가 높아지는 장점이 있다.
+
+만약에, MyBatis 를 사용중이라면 엔티티 개념을 도입하는 것보다 God Class 개념으로 클래스를 사용하는게 개발은 편할 수 있다.
+
+## VO
+
+값 객체(Value Object) 라는 의미이다.
+
+```java
+public class Address {
+    private String city;
+    private String street;
+    private String zipcode;
+
+    // 생략
+}
+```
+
+- __특징__
+    - 값 객체는 `불변(immutable)`의 특징을 지닌다.
+    - 값 객체에 있는 모든 속성이 같은 값을 가져야, 동일한 객체로 판단한다.
+    - 값 타입을 여러 엔티티에서 공유하면 위험하다.(Side effect 발생 가능)
+
+## DTO
+
+데이터 전송 객체(Data Transfer Object) 는 요청과 응답을 처리하기 위한 객체라고 생각하면 된다.
+
+일반적으로 `Request` 용 DTO 와 `Response` 용 DTO 로 구분지어 사용한다.
+
+```java
+public class MemberRequest {
+    @NotBlank
+    private String email;
+    @NotBlank
+    private String password;
+    @Positive
+    private Integer age;
+
+    public MemberRequest() {
+    }
+
+    // 생략
+}
+```
+
+DTO 를 사용하는 이유는 뭘까? 
+
+REST API 를 설계하는 경우 API 응답으로 엔티티를 쓰게되면, 엔티티에 속성이 추가되거나 삭제될 때마다 `API 명세`가 바뀌게 된다.
+
+엔티티는 테이블의 명세와도 같은데, 응답으로 엔티티를 쓰게 되면 `테이블 명세 = API 명세 ?` 이렇게 되기 때문에 API 명세가 테이블에 의존하게 되는 현상이 발생한다.
+
+따라서, 이러한 이유 때문에 DTO 를 사용한다고 생각한다.
+
+### 정리
+
+Entity, VO, DTO 를 나누는 이유를 한 문장으로 말하라고하면, 나는 `역할`과 `책임`을 잘 구분 짓기 위함이라고 말할 것 같다. 
 
 ## References
 
