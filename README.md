@@ -58,7 +58,7 @@ void pojoWithReflection() {
 }
 ```
 
-POJO 클래스에서 getter 메서드 가 `getStart()` 하나 뿐이다. 리플렉션을 통해서 속성을 조회할때 get 뒤에 붙은 이름으로 조회한다.
+POJO 클래스에서 getter 메서드가 `getStart()` 하나 뿐이다. 리플렉션을 통해서 속성을 조회할때 get 뒤에 붙은 이름으로 조회한다.
 
 ## JavaBeans
 
